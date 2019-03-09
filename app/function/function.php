@@ -77,5 +77,28 @@ function stripUnicode($str){
 	return $str;
 }
 
+function get_cates($data, $parent = 0, $str = '--', $select = 0){
+	foreach ($data as $val) {
+		$name 	= $val['name'];
+		$id  	= $val['id'];
+
+		if($val['parent_id'] == $parent){
+			if($select != 0 && $id == $select){
+				echo "<option value='$id' selected='selected'>$str $name</option>";	
+			}else{
+				echo "<option value='$id'>$str $name</option>";		
+			}
+			get_cates($data, $id, $str . '--', $select);
+		}
+	}
+}
+
+
+function randomName($length = 5){			
+	$range_numerics = array_merge(range('a', 'z'), range(0,10), range('A', 'Z'));
+	shuffle($range_numerics);
+	return substr(implode($range_numerics, ''), 0, $length);
+}
+
 
 ?>
